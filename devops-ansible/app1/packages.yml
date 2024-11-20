@@ -1,0 +1,104 @@
+---
+- name: Install and start various services
+  hosts: all
+  become: yes  # Ensures privilege escalation (root access)
+
+  tasks:
+    - name: Update package cache (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install Apache HTTP Server
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable Apache service
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable Nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install MySQL Server
+      ansible.builtin.apt:
+        name: mysql-server
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable MySQL service
+      ansible.builtin.service:
+        name: mysql
+        state: started
+        enabled: true
+      when: ansible_os_family == "Debian"
+
+    - name: Install PHP
+      ansible.builtin.apt:
+        name: php
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install PHP extensions
+      ansible.builtin.apt:
+        name:
+          - php-mysql
+          - php-xml
+          - php-mbstring
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Curl
+      ansible.builtin.apt:
+        name: curl
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Node.js
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install npm
+      ansible.builtin.apt:
+        name: npm
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start and enable Docker service
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+      when: ansible_os_family == "Debian"
+
+    # Repeat similar tasks for RedHat/CentOS if needed
+    # You can add conditional checks for other OS families here
